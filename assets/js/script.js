@@ -16,7 +16,7 @@ $(function () {
     console.log(blockID);
     console.log(userData);
 
-    localStorage(blockID, userData);
+    localStorage.setItem(blockID, userData);
     console.log(localStorage);
   })
   
