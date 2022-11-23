@@ -10,42 +10,65 @@ $(function () {
   // time-block containing the button that was clicked? How might the id be
   // useful when saving the description in local storage?
   var dayJsObject = dayjs();
-  var present = "present"
-  var past = "past";
-  var future = "future";
 
   var clickSave = $(".btn").click(function() {
     var blockID = $(this).parent().attr('id');
     var userData = $('.description').val();
+    console.log(userData);
 
     localStorage.setItem(blockID, userData);
-  })
+
+  });
   
   // TODO: Add code to apply the past, present, or future class to each time
   // block by comparing the id to the current hour. HINTS: How can the id
   // attribute of each time-block be used to conditionally add or remove the
   // past, present, and future classes? How can Day.js be used to get the
   // current hour in 24-hour time?
-  var hourInDay = dayJsObject.format("H");
-  var currentHour = dayJsObject.format("h A");
-  var currentHourEl = currentHour.replace(/\s+/g, '');
+  // dayJsObject.format("H");
+  var currentHour = 15;
   var getRow = $(".hour");
+  var getRowClass = getRow.parent();
 
-  console.log(hourInDay);
+  if (currentHour < 9){
+    console.log('less than 9');
+    getRowClass.removeClass("present past");
+    getRowClass.addClass("future");
+  } else if (currentHour > 17){
+    console.log('more than 17');
+    getRowClass.removeClass("present future");
+    getRowClass.addClass("past");
+  } else {
+    for (var i = 0; i < getRow.length; i++){
+      var rowHour = parseInt(getRow[i].dataset.time);
+      console.log((typeof rowHour));
+      if (rowHour === currentHour){
+        console.log('EQUAL');
+        getRowClass.eq(i).removeClass("past present future");
+        getRowClass.eq(i).addClass("present");
+      } else if (rowHour < currentHour){
+        console.log('LESS');
+        getRowClass.eq(i).removeClass("past present future");
+        getRowClass.eq(i).addClass("past");
+      } else if (rowHour > currentHour){
+        console.log('MORE');
+        getRowClass.eq(i).removeClass("past present future");
+        getRowClass.eq(i).addClass("future");
+      }
+  };
   
-  for (var i = 0; i < getRow.length; i++){
-    var rowHour = getRow[i].textContent;
-    var getCurrentStatus = getRow.eq(i).parent();
-    if (hourInDay < 9){
-      getCurrentStatus.removeClass("present past");
-      getCurrentStatus.addClass("future");
-    } else if (hourInDay > 17){
-      getCurrentStatus.removeClass("present future");
-      getCurrentStatus.addClass("past");
-    };
-    console.log(rowHour);
-
-  
+  // for (var i = 0; i < getRow.length; i++){
+  //   var rowHour = getRow[i].dataset.time;
+  //   if (rowHour === currentHour){
+  //     getRowClass.removeClass("past present future");
+  //     getRowClass.addClass("present");
+  //   } else if (rowHour < currentHour){
+  //     getRowClass.removeClass("past present future");
+  //     getRowClass.addClass("past");
+  //   } else if (rowHour > currentHour){
+  //     getRowClass.removeClass("past present future");
+  //     getRowClass.addClass("future");
+  //   }
 
     }
   // TODO: Add code to get any user input that was saved in localStorage and set
