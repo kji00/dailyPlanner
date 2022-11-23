@@ -10,7 +10,6 @@ $(function () {
   // time-block containing the button that was clicked? How might the id be
   // useful when saving the description in local storage?
   var dayJsObject = dayjs();
-
   var clickSave = $(".btn").click(function() {
     var blockID = $(this).parent().attr('id');
     var userData = $(this).siblings('.description').val();
@@ -25,7 +24,9 @@ $(function () {
   // attribute of each time-block be used to conditionally add or remove the
   // past, present, and future classes? How can Day.js be used to get the
   // current hour in 24-hour time?
-  var currentHour = dayJsObject.format("H");;
+  var displayEl = dayJsObject.format("dddd, MMMM DD,YYYY");
+  var currentDayEl = $("#currentDay");
+  var currentHour = dayJsObject.format("H");
   var getRow = $(".hour");
   var getRowClass = getRow.parent();
 
@@ -38,7 +39,6 @@ $(function () {
   } else {
     for (var i = 0; i < getRow.length; i++){
       var rowHour = parseInt(getRow[i].dataset.time);
-      console.log((typeof rowHour));
       if (rowHour === currentHour){
         getRowClass.eq(i).removeClass("past present future");
         getRowClass.eq(i).addClass("present");
@@ -56,9 +56,6 @@ $(function () {
   // attribute of each time-block be used to do this?
   //
   // TODO: Add code to display the current date in the header of the page.
-
-  var displayEl = dayJsObject.format("dddd, MMMM DD,YYYY");
-  var currentDayEl = $("#currentDay");
 
   currentDayEl.text(displayEl);
 
