@@ -7,7 +7,7 @@ In this web app, users can fill out their daily tasks and reminders for work. Th
 ![between9amAnd6pm](./assets/images/between9amAnd6pm.png)
 ![localStorage](./assets/images/localstorage.png)
 
-![livelink](https://kji00.github.io/dailyPlanner/)
+(https://kji00.github.io/dailyPlanner/)
 
 
 GIVEN I am using a daily planner to create a schedule
