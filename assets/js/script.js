@@ -13,10 +13,10 @@ $(function () {
 
   var clickSave = $(".btn").click(function() {
     var blockID = $(this).parent().attr('id');
-    var userData = $('.description').val();
-    console.log(userData);
+    var userData = $(this).siblings('.description').val();
 
     localStorage.setItem(blockID, userData);
+    userData = "";
 
   });
   
@@ -25,17 +25,14 @@ $(function () {
   // attribute of each time-block be used to conditionally add or remove the
   // past, present, and future classes? How can Day.js be used to get the
   // current hour in 24-hour time?
-  // dayJsObject.format("H");
-  var currentHour = 15;
+  var currentHour = dayJsObject.format("H");;
   var getRow = $(".hour");
   var getRowClass = getRow.parent();
 
   if (currentHour < 9){
-    console.log('less than 9');
     getRowClass.removeClass("present past");
     getRowClass.addClass("future");
   } else if (currentHour > 17){
-    console.log('more than 17');
     getRowClass.removeClass("present future");
     getRowClass.addClass("past");
   } else {
@@ -43,34 +40,17 @@ $(function () {
       var rowHour = parseInt(getRow[i].dataset.time);
       console.log((typeof rowHour));
       if (rowHour === currentHour){
-        console.log('EQUAL');
         getRowClass.eq(i).removeClass("past present future");
         getRowClass.eq(i).addClass("present");
       } else if (rowHour < currentHour){
-        console.log('LESS');
         getRowClass.eq(i).removeClass("past present future");
         getRowClass.eq(i).addClass("past");
       } else if (rowHour > currentHour){
-        console.log('MORE');
         getRowClass.eq(i).removeClass("past present future");
         getRowClass.eq(i).addClass("future");
       }
-  };
-  
-  // for (var i = 0; i < getRow.length; i++){
-  //   var rowHour = getRow[i].dataset.time;
-  //   if (rowHour === currentHour){
-  //     getRowClass.removeClass("past present future");
-  //     getRowClass.addClass("present");
-  //   } else if (rowHour < currentHour){
-  //     getRowClass.removeClass("past present future");
-  //     getRowClass.addClass("past");
-  //   } else if (rowHour > currentHour){
-  //     getRowClass.removeClass("past present future");
-  //     getRowClass.addClass("future");
-  //   }
-
-    }
+    };
+  }
   // TODO: Add code to get any user input that was saved in localStorage and set
   // the values of the corresponding textarea elements. HINT: How can the id
   // attribute of each time-block be used to do this?
